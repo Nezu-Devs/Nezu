@@ -10,6 +10,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 
+# Blue formatter is like Black but with 
 [tool.poetry.group.dev.dependencies]
 blue = "0.9.1"
 

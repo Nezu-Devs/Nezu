@@ -54,6 +54,9 @@ Output should look something like that.
 - [ ] test on different Pypy
 - [ ] test on Anaconda
 - [ ] add badges
+- [ ] format files with blue
+- [ ] remove obsolete tests
+- [ ] gitignore .vscode, __pycache, dist
 - [ ] write proper documentation
   - [ ] How to interpret output
   - [ ] Explain arguments
