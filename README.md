@@ -32,11 +32,13 @@ python file.py --nezu
 
 Output should look something like that.
 
-### How to interpret output
-
 ```python-repl
 @5      l  x:int  =>  13
 ```
+
+### How to interpret output
+
+[Incoming...]
 
 ### TO DO
 
