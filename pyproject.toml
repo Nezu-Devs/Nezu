@@ -1,11 +1,12 @@
 [tool.poetry]
 name = "nezu"
 version = "0.1.0"
-description = "Elegant logging and debuging module"
+description = "Elegant debuging module"
 authors = ["Chuck Cartwright"]
 license = "GPL-3.0"
 readme = "README.md"
 
+# Only Uses Python Standard Library!
 [tool.poetry.dependencies]
 python = "^3.11"
 
