@@ -48,12 +48,15 @@ Output should look something like that.
 - [ ] automate testing with Github actions?
 - [ ] automate deployment to PyPI with Github actions?
 - [ ] publish to Conda
-- [ ] test on different python versions
+- [ ] test on different CPython versions
+- [ ] test on different Pypy
+- [ ] test on Anaconda
 - [ ] add badges
 - [ ] write proper documentation
   - [ ] How to interpret output
   - [ ] Explain arguments
   - [ ] Note args
+  - [ ] brag about being on pypy and and conda
 - [ ] make a helper function, that returns dictionary (so it's easier to assert and doesn't require `--nezu`)
   - [ ] write function
   - [ ] write docstring for it
