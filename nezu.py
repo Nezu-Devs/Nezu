@@ -96,7 +96,24 @@ def __parse_str(long_str):
     return key
 
 
-def say(*keys, note=..., hide=1):
+def say(*keys:str, note:str=None, hide:int=1) -> None:
+    '''
+    Parameters
+    ------------
+        *keys:str
+            Names of varables to inspect
+        note:str
+            Optional comment. Ignored if equal to ellipsis.
+        hide:int
+            How deep do you want to hide this message.
+
+    Function displays following data in that order for each inspected varable:
+      - number of line it was called at
+      - scope of inspected variable
+      - name of inspected variable
+      - type of inspected variable
+      - value of inspected variable
+    '''
     global seek
     if seek >= hide:
         FRAME = currentframe().f_back
@@ -110,13 +127,13 @@ def say(*keys, note=..., hide=1):
             desc = '  |  '.join(
                 [__lgu(LOCAL, GLOBAL, BINS, key) for key in keys]
             )
-            sufx = f'  |  << {note} >>' if note != ... else ''
+            sufx = f'  |  << {note} >>' if note != None else ''
         else:
             prfx = f'@{LINE}\t{"-"*70}\n\t'
             desc = '\n\t'.join(
                 [__lgu(LOCAL, GLOBAL, BINS, key) for key in keys]
             )
-            sufx = f'\n\t<< {note} >>' if note != ... else ''
+            sufx = f'\n\t<< {note} >>' if note != None else ''
             sufx += f'\n\t{"-"*70}'
 
         print(f'{prfx}{desc}{sufx}')

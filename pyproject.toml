@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nezu"
-version = "0.1.2"
+version = "0.1.3"
 description = "Elegant debuging module"
 authors = ["Chuck Cartwright"]
 license = "GPL-3.0"
@@ -10,9 +10,10 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 
-# Blue formatter is like Black but with 
+# Blue formatter is like Black but with single quotes.
 [tool.poetry.group.dev.dependencies]
 blue = "0.9.1"
+pytest = "^8.0.0"
 
 [build-system]
 requires = ["poetry-core"]
