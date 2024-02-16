@@ -41,17 +41,17 @@ Inspect variable using `say()` function. Pass name of variable you want to inspe
 # file.py
 from nezu import say
 
-say('egg')			# works on simple variables
-say('ham.spam')		# works on attributes
+say('egg')          # works on simple variables
+say('ham.spam')     # works on attributes
 say('spam["spam"]') # works on keys and indexes
-say('print')		# works on functions and build-ins
+say('print')        # works on functions and build-ins
 ```
 
 Output is hidden by default. If you want to display debug commands run your program with argument `--nezu`.
 
 ```bash
-$ python file.py 			# Nothing is displayed by this command
-$ python file.py --nezu		# But everything is displayed by this command
+$ python file.py            # Nothing is displayed by this command
+$ python file.py --nezu     # But everything is displayed by this command
 @4      u  egg
 @5      u  ham.spam
 @6      u  spam["spam"]
