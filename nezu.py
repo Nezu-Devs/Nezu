@@ -22,7 +22,7 @@ color = args.nezu_color
 def __lgu(loc, glob, bins, long_str):
     is_undefined = False
     key = __parse_str(long_str)
-    _sep0 = '  '
+    _sep0 = ' '
 
     if key in loc:
         try:
@@ -79,7 +79,11 @@ def __lgu(loc, glob, bins, long_str):
     else:
         _desc = _val
 
-    return f'{_src}{_sep0}{long_str}{_sep1}{_type}{_sep2}{_desc}'
+    return (
+        f'\u001b[36m{_src}\u001b[35m{_sep0}\u001b[0m{long_str}\u001b[35m{_sep1}\u001b[31m{_type}\u001b[35m{_sep2}\u001b[33m{_desc}\u001b[0m'
+        if color
+        else f'{_src}{_sep0}{long_str}{_sep1}{_type}{_sep2}{_desc}'
+    )
 
 
 def __parse_str(long_str):
@@ -96,8 +100,8 @@ def __parse_str(long_str):
     return key
 
 
-def say(*keys:str, note:str=None, hide:int=1) -> None:
-    '''
+def say(*keys: str, note: str = None, hide: int = 1) -> None:
+    """
     Parameters
     ------------
         *keys:str
@@ -113,7 +117,7 @@ def say(*keys:str, note:str=None, hide:int=1) -> None:
       - name of inspected variable
       - type of inspected variable
       - value of inspected variable
-    '''
+    """
     global seek
     if seek >= hide:
         FRAME = currentframe().f_back
@@ -123,13 +127,13 @@ def say(*keys:str, note:str=None, hide:int=1) -> None:
         BINS = FRAME.f_builtins
 
         if len(keys) < 2:
-            prfx = f'@{LINE}\t'
+            prfx = f'@{LINE}'.rjust(7)+' '
             desc = '  |  '.join(
                 [__lgu(LOCAL, GLOBAL, BINS, key) for key in keys]
             )
             sufx = f'  |  << {note} >>' if note != None else ''
         else:
-            prfx = f'@{LINE}\t{"-"*70}\n\t'
+            prfx = f'@{LINE}'.rjust(7)+f' {"-"*70}\n\t'
             desc = '\n\t'.join(
                 [__lgu(LOCAL, GLOBAL, BINS, key) for key in keys]
             )

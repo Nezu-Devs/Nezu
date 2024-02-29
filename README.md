@@ -71,6 +71,11 @@ $ python file.py --nezu     # But everything is displayed by this command
  └────── Line number of inspection.
 ```
 
+### Coloring output
+
+By default nezu output is monochrome.
+You can color output on terminals that support it. Instead of passing `--nezu` at execution, pass `--nezu-color`.
+
 ### Hiding output
 
 Function `say()` can be can be hidden into deeper levels of debugging via `hide` parameter. Execution argument `--nezu` seeks only for says hidden at level 1. Now if you want to display more, you run your program with `--nezu-seek` integer argument. In example bellow only says hidden up to level 3 are displayed.
@@ -96,7 +101,8 @@ $ python file.py --nezu-seek=3
 ### TO DO
 
 - [x] add class method support?
-- [ ] add coloring
+- [x] add coloring
+- [ ] add classes parameter (so you can print only group of logs)
 - [ ] indicate shadowing
 - [x] write docstring for say
 - [ ] write tests for say
