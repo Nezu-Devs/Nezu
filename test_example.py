@@ -1,5 +1,7 @@
 # file.py
-from nezu import say
+from nezu import nezu, say
+
+nezu.os()
 
 say('egg')			# works on simple variables
 say('ham.spam')		# works on attributes

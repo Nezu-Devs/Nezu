@@ -1,22 +1,91 @@
 from inspect import currentframe
-from argparse import ArgumentParser
+from typing import Any
 
 
-parser = ArgumentParser()
-parser.add_argument('--nezu', action='store_true', help='Enable nezu debuger.')
-parser.add_argument(
-    '--nezu-color', action='store_true', help='Enable nezu debuger in color.'
-)
-parser.add_argument(
-    '--nezu-seek',
-    type=int,
-    choices=range(1, 11),
-    help='Seek for hidden debug messages.',
-)
+class __Config:
+    
+    def __init__(self):
+        self.__null = True
+        self.__seek = 0
+        self.__color = False
 
-args = parser.parse_args()
-seek = args.nezu or args.nezu_color if not args.nezu_seek else args.nezu_seek
-color = args.nezu_color
+    def __call__(self, seek:int=0, color:bool=False):
+        if self.null:
+            self.__seek = seek
+            self.__color = color
+
+    @property
+    def null(self):
+        if not self.__null:
+            raise RuntimeError('This object, can only be initialized once')
+        else:
+            self.__null = False
+            return True
+
+    @property
+    def seek(self):
+        return self.__seek
+    
+    @seek.setter
+    def seek(self, depth:int):
+        self.__seek = depth
+        return self
+
+
+    @property
+    def color(self):
+        return self.__color
+
+    @color.setter
+    def color(self, b:bool):
+        self.__color = b
+        return self
+
+    def argv(self):
+        if self.null:
+            from argparse import ArgumentParser
+
+            parser = ArgumentParser()
+            parser.add_argument('--nezu', action='store_true', help='Enable nezu debuger.')
+            parser.add_argument(
+                '--nezu-color', action='store_true', help='Enable nezu debuger in color.'
+            )
+            parser.add_argument(
+                '--nezu-seek',
+                type=int,
+                choices=range(1, 11),
+                help='Seek for hidden debug messages.',
+            )
+
+            args = parser.parse_args()
+            self.__seek = args.nezu or args.nezu_color if not args.nezu_seek else args.nezu_seek
+            self.__color = args.nezu_color
+
+    def json(self, path:str='nezu.json', **kwargs):
+        if self.null:
+            import json
+            with open(path,'r', **kwargs) as file:
+                all_data = json.load(file)
+            nezu_data = all_data.get('nezu',{})
+            self.__seek = nezu_data.get('seek',0)
+            self.__color = nezu_data.get('color',False)
+
+    def os(self):
+        if self.null:
+            from os import getenv
+            seek = getenv('NEZU_SEEK')
+            seek = int(seek) if seek != None else 0
+            self.__seek = seek
+            color = getenv('NEZU_COLOR')
+            color = color.casefold() if color != None else 'False'
+            color = True if color in ('true','t') or color.isdecimal() and int(color) != 0 else False
+            self.__color = color
+
+
+
+
+
+
 
 
 def __lgu(loc, glob, bins, long_str):
@@ -81,7 +150,7 @@ def __lgu(loc, glob, bins, long_str):
 
     return (
         f'\u001b[36m{_src}\u001b[35m{_sep0}\u001b[0m{long_str}\u001b[35m{_sep1}\u001b[31m{_type}\u001b[35m{_sep2}\u001b[33m{_desc}\u001b[0m'
-        if color
+        if nezu.color
         else f'{_src}{_sep0}{long_str}{_sep1}{_type}{_sep2}{_desc}'
     )
 
@@ -100,7 +169,7 @@ def __parse_str(long_str):
     return key
 
 
-def say(*keys: str, note: str = None, hide: int = 1) -> None:
+def __print(*keys: str, note: str = None, hide: int = 1) -> None:
     """
     Parameters
     ------------
@@ -118,8 +187,8 @@ def say(*keys: str, note: str = None, hide: int = 1) -> None:
       - type of inspected variable
       - value of inspected variable
     """
-    global seek
-    if seek >= hide:
+
+    if nezu.seek >= hide:
         FRAME = currentframe().f_back
         LINE = FRAME.f_lineno
         LOCAL = FRAME.f_locals
@@ -141,3 +210,8 @@ def say(*keys: str, note: str = None, hide: int = 1) -> None:
             sufx += f'\n\t{"-"*70}'
 
         print(f'{prfx}{desc}{sufx}')
+
+
+
+ず = nezu = __Config()
+ね = say = __print
