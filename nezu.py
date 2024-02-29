@@ -10,6 +10,9 @@ class __Config:
         self.__color = False
 
     def __call__(self, seek:int=0, color:bool=False):
+        '''
+        Initialaze nezu
+        '''
         if self.null:
             self.__seek = seek
             self.__color = color
@@ -42,6 +45,9 @@ class __Config:
         return self
 
     def argv(self):
+        '''
+        Initialaze nezu via command line arguments
+        '''
         if self.null:
             from argparse import ArgumentParser
 
@@ -62,6 +68,9 @@ class __Config:
             self.__color = args.nezu_color
 
     def json(self, path:str='nezu.json', **kwargs):
+        '''
+        Initialaze nezu via json file
+        '''
         if self.null:
             import json
             with open(path,'r', **kwargs) as file:
@@ -71,6 +80,9 @@ class __Config:
             self.__color = nezu_data.get('color',False)
 
     def os(self):
+        '''
+        Initialaze nezu via os environmental variables
+        '''
         if self.null:
             from os import getenv
             seek = getenv('NEZU_SEEK')
