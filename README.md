@@ -9,14 +9,15 @@
 Example
 ```py
 # file.py
-from nezu import say
+from nezu import nezu, say
 
+nezu(1)   # initial configuration
 x = 13
-say('x')
+say('x')  # print debuging info
 ```
 ```bash
-$ py file.py --nezu
-@5      l  x:int  =>  13
+$ py file.py
+     @6 l x:int  =>  13
 ```
 
 
@@ -35,11 +36,12 @@ $ python -m poetry add nezu
 #### Basic usage
 
 
-Inspect variable using `say()` function. Pass name of variable you want to inspect as `str` argument. 
-
+Inspect variable using `say` function. Pass name of variable you want to inspect as `str` argument. 
+**NOTE**: Output of `say` function is hidden by default. If you wannna see what nezu has to say you need to configure it first using `nezu` object. Simplest way is to call it with argument `1`.
 ```py
 # file.py
-from nezu import say
+from nezu import nezu, say
+nezu(1)
 
 say('egg')          # works on simple variables
 say('ham.spam')     # works on attributes
@@ -47,16 +49,14 @@ say('spam["spam"]') # works on keys and indexes
 say('print')        # works on functions and build-ins
 ```
 
-Output is hidden by default. If you want to display debug commands run your program with argument `--nezu`.
-
+<!-- 
 ```bash
-$ python file.py            # Nothing is displayed by this command
-$ python file.py --nezu     # But everything is displayed by this command
-@4      u  egg
-@5      u  ham.spam
-@6      u  spam["spam"]
-@7      b  print:function  =>  Prints the values to a stream, or to sys...
-```
+$ python file.py
+     @4 u egg
+     @5 u ham.spam
+     @6 u spam["spam"]
+     @7 b print:function  =>  Prints the values to a stream, or to sys...
+``` -->
 
 ### How to interpret output?
 
@@ -69,6 +69,38 @@ $ python file.py --nezu     # But everything is displayed by this command
  │      └──────── Scope of inspected variable.
  │				  l:local, g:global, b:build-in, u:undefined          
  └────── Line number of inspection.
+```
+
+### Configuration
+nezu suppport multiple ways of configuration.
+#### Hardcoded configuration
+Just call object `nezu` like function. 1st argument determin debuging level, 2nd determine coloring.
+```py
+from nezu import nezu, say
+
+nezu(1, True)
+...
+```
+#### Configuration via command line arguments
+Call `nezu.argv()` to enable configuration via command line arguments
+```py
+# argv_example.py
+from nezu import nezu, say
+
+nezu.argv()
+...
+```
+```bash
+$ py argv_example.py # Displays nothing
+...
+$ py argv_example.py --nezu # Displays lvl 1 debug messages
+...
+$ py argv_example.py --nezu-color # Displays lvl 1 debug messages, colored
+...
+$ py argv_example.py --nezu-seek=5 # Displays lvls 1-5 debug messages
+...
+$ py argv_example.py --nezu-color=1 --nezu-seek=5 # Displays lvls 1-5 debug messages, colored
+...
 ```
 
 ### Coloring output
@@ -110,7 +142,7 @@ $ python file.py --nezu-seek=3
 - [ ] automate deployment to PyPI with Github actions?
 - [ ] publish to Conda
 - [ ] test on different CPython versions
-- [ ] test on different Pypy
+- [ ] test on Pypy
 - [ ] test on Anaconda
 - [ ] add badges
 - [ ] format files with blue
@@ -123,7 +155,7 @@ $ python file.py --nezu-seek=3
     - [ ] Notes
     - [ ] args
   - [ ] Note args
-  - [ ] brag about being on pypy and and conda
+  - [ ] brag in readme about being on pypy and and conda
 - [ ] make a helper function, that returns dictionary (so it's easier to assert and doesn't require `--nezu`)
   - [ ] write function
   - [ ] write docstring for it
@@ -131,3 +163,8 @@ $ python file.py --nezu-seek=3
   - [ ] document it in README
 - [ ] Write code of conduct
 - [ ] Write/generate TOC
+- [ ] Update README about configuration
+- [ ] Write docstrings to configuration functions
+
+
+
