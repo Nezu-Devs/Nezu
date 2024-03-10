@@ -1,15 +1,25 @@
+"""Elegant debuging tool"""
 from inspect import currentframe
-from typing import Any
+from typing import Any, Self
 
 
-class Config:
-    """Configuration object"""
+class Nezu:
+    """Nezu object"""
 
-    def __init__(self, null=False):
-        self.__null = null
-        self.__seek = 0
-        self.__color = False
+    def __init__(
+        self,
+        id: str | None = None,
+        seek: int = 0,
+        color: bool = False,
+        null: bool = False,
+    ):
+        self.__id = id
+        self.__seek = seek
+        self.__color = color
+        self.__null = True
         self.hard = self.__call__
+        if self.__id == 'nezu':
+            self.argv = self.__argv
 
     def __call__(self, seek: int = 0, color: bool = False):
         """
@@ -17,50 +27,84 @@ class Config:
 
         Parameters
         ------------
-            seek:int=0
-                How deep to seek for hidden calls of `say` function.
-                Say function is called with `hide` param (0 by default).
-                If `seek => hide` message will be displayed
+            seek: int = 0
+                How deep to seek for hidden calls of `say` function?
+                Say function is called with `hide` parameter (0 by default).
+                If `seek => hide` message will be displayed.
+            color: bool = False
+                Determine if output is colored.
 
         """
         if self.null:
             self.__seek = seek
             self.__color = color
 
+    def __iter__(self):
+        lis = [
+            ('id', self.__id),
+            ('seek', self.__seek),
+            ('color', self.__color),
+        ]
+        return iter(lis)
+
     @property
-    def null(self):
+    def null(self, where='Nowhere'):
+        """Determine if object can be configured"""
         if not self.__null:
             raise RuntimeError('This object, can only be configured once')
         else:
+            # print(where)
             self.__null = False
             return True
+        
 
     @property
     def seek(self):
+        """
+        How deep to seek for hidden calls of `say` function?
+        Say function is called with `hide` parameter (0 by default).
+        If `seek => hide` message will be displayed.
+        """
         return self.__seek
 
     @seek.setter
-    def seek(self, depth: int):
+    def seek(self, depth: int) -> Self:
+        """
+        How deep to seek for hidden calls of `say` function?
+        Say function is called with `hide` parameter (0 by default).
+        If `depth => hide` message will be displayed.
+
+        Parameters
+        ------------
+            depth:int
+        """
         self.__seek = depth
         return self
 
     @property
     def color(self):
+
         return self.__color
 
     @color.setter
     def color(self, b: bool):
+        """
+        Determine if output is colored.
+
+        Parameters
+        ------------
+        - b: bool
+        """
         self.__color = b
         return self
 
-    def argv(self):
-        """
-        Initialaze nezu via command line arguments
-        """
-        if self.null:
+    def __argv(self):
+        """ """
+        if self.null and self.id == 'nezu':
             from argparse import ArgumentParser
 
             parser = ArgumentParser()
+
             parser.add_argument(
                 '--nezu', action='store_true', help='Enable nezu debuger.'
             )
@@ -83,6 +127,10 @@ class Config:
                 else args.nezu_seek
             )
             self.__color = args.nezu_color
+        else:
+            raise RuntimeError(
+                'Only object of id `nezu` can be called with argv.'
+            )
 
     def json(self, path: str = 'nezu.json', **kwargs):
         """
@@ -93,7 +141,7 @@ class Config:
 
             with open(path, 'r', **kwargs) as file:
                 all_data = json.load(file)
-            nezu_data = all_data.get('nezu', {})
+            nezu_data = all_data.get(self.__id, {})
             self.__seek = nezu_data.get('seek', 0)
             self.__color = nezu_data.get('color', False)
 
@@ -101,22 +149,22 @@ class Config:
         """
         Initialaze nezu via os environmental variables
         """
-        if self.null:
-            from os import getenv
+        # if self.null:
+        from os import getenv
 
-            seek = getenv('NEZU_SEEK')
-            seek = int(seek) if seek != None else 0
-            self.__seek = seek
-            color = getenv('NEZU_COLOR')
-            color = color.casefold() if color != None else 'False'
-            color = (
-                True
-                if color in ('true', 't')
-                or color.isdecimal()
-                and int(color) != 0
-                else False
-            )
-            self.__color = color
+        seek = getenv(f'{self.__id.upper()}_SEEK')
+        seek = int(seek) if seek != None else 0
+        self.__seek = seek
+        color = getenv(f'{self.__id.upper()}_COLOR')
+        color = color.casefold() if color != None else 'False'
+        color = (
+            True
+            if color in ('true', 't')
+            or color.isdecimal()
+            and int(color) != 0
+            else False
+        )
+        self.__color = color
 
     def __lgu(self, loc, glob, bins, long_str):
         is_undefined = False
@@ -201,19 +249,33 @@ class Config:
         """
         Parameters
         ------------
-            *keys:str
-                Names of varables to inspect
-            note:str=None
-                Optional comment. Ignored if equal to None.
-            hide:int=1
-                How deep do you want to hide this message.
-                If `hide <= 0`, this message will be displayed by default.
+        
+        - `*keys:str`
+            
+            Names of varables to inspect
 
-        Function displays following data in that order for each inspected varable:
+        - `note:str=None`
+            
+            Optional comment. Ignored if equal to None.
+
+        - `hide:int=1`
+            
+            How deep do you want to hide this message.
+            If `hide <= 0`, this message will be displayed by default.
+
+        
+        Description
+        ------------
+        Function `say` displays following data in that order for each inspected varable:
+        
         - number of line it was called at
+        
         - scope of inspected variable
+        
         - name of inspected variable
+        
         - type of inspected variable
+        
         - value of inspected variable
         """
 
@@ -240,6 +302,8 @@ class Config:
 
             print(f'{prfx}{desc}{sufx}')
 
-
-ず = nezu = Config(True)
+def real_nezu():
+    defaults = {'id':'nezu', 'null':True}
+    return Nezu(**defaults)
+ず = nezu = real_nezu()
 ね = say = nezu.say

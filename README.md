@@ -137,7 +137,7 @@ $ python file.py --nezu-seek=3
 - [ ] add classes parameter (so you can print only group of logs)
 - [ ] indicate shadowing
 - [x] write docstring for say
-- [ ] write tests for say
+- [x] write tests for say
 - [ ] automate testing with Github actions?
 - [ ] automate deployment to PyPI with Github actions?
 - [ ] publish to Conda
@@ -150,6 +150,7 @@ $ python file.py --nezu-seek=3
 - [ ] gitignore .vscode, __pycache, dist
 - [ ] write proper documentation
   - [x] How to interpret output
+  - [ ] Configuration
   - [ ] Explain arguments
     - [x] Hiding
     - [ ] Notes
@@ -165,6 +166,4 @@ $ python file.py --nezu-seek=3
 - [ ] Write/generate TOC
 - [ ] Update README about configuration
 - [ ] Write docstrings to configuration functions
-
-
 
