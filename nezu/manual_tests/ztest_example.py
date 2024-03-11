@@ -1,5 +1,5 @@
 # file.py
-from nezu import say, nezu
+from ..nezu import say, nezu
 
 nezu(1)
 spam = {'spam':'bacon'}

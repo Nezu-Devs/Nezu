@@ -1,5 +1,6 @@
 #file.py
-from nezu import say
+from ..nezu import say
+
 
 say('egg', hide=1)
 say('ham', hide=2)
