@@ -105,7 +105,7 @@ This can be changed in code.
 
 #### Env vars config
 
-If you want to use default config method, change your _env vars_ in terminal and than run your Python file.
+If you want to use default config method, change your _env vars_ in terminal and run Python script.
 
 - **_Bash_**
 
