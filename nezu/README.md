@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/badge/license-MIT-teal)](https://opensource.org/license/mit/)
 [![Dependencies](https://img.shields.io/badge/dependencies-None-teal)](https://github.com/Nezu-Devs/Nezu/blob/main/pyproject.toml)
 
-### Elegant debug module
+Elegant debug module
 
 - **_Python code example_**
   ```py
@@ -14,17 +14,35 @@
   say('x')  # print debug info
   ```
 - **_Bash commands to run_**
+  
   ```bash
   export NEZU_SEEK = 1
   $ py file.py
       @4 l x:int  =>  13
   ```
 
-### TOC
+### Table of content
 
-[TOC]
+[NEZU](#nezu)
 
-### How to install?
+- [Table of content](#table-of-content)
+- [Installation](#installation)
+- [Usage](#usage)
+    - [Function say](#function-say)
+- [Config](#config) 
+    - [Env vars config](#env-var-config)
+    - [JSON config](#json-config)
+    - [Hardcoded config](#hardcoded-config)
+- [Output interpretation](#output-interpretation)
+- [Coloring output](#coloring-output)
+  - [Env vars coloring](#env-vars-coloring)
+  - [JSON coloring](#json-coloring)
+  - [Hardcoded coloring](#hardcoded-coloring)
+- [Hiding output](#hiding-output)
+- [TO DO](#to-do)
+
+
+### Installation
 
 - **_pip_**
 
@@ -38,7 +56,7 @@
   $ python -m poetry add nezu
   ```
 
-### How to use?
+### Usage
 
 - Inspect variable using [function say](#function-say) in your code.
 - [Configure](#config) Nezu to show output.
