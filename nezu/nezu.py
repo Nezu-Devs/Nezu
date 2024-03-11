@@ -119,15 +119,16 @@ class Nezu:
                 )
                 sufx = f'  |  << {note} >>' if note != None else ''
             else:
-                prfx = f'@{LINE}'.rjust(7) + f' {"-"*70}\n\t'
-                desc = '\n\t'.join(
+                tab = f'\n{" "*8}'
+                prfx = f'@{LINE}'.rjust(7) + ' ' +  '-'*70 + tab
+                desc = tab.join(
                     [
                         get_output(LOCAL, GLOBAL, BINS, key, self.color)
                         for key in keys
                     ]
                 )
-                sufx = f'\n\t<< {note} >>' if note != None else ''
-                sufx += f'\n\t{"-"*70}'
+                sufx = f'{tab}<< {note} >>' if note != None else ''
+                sufx += f'{tab}{"-"*70}'
 
             print(f'{prfx}{desc}{sufx}')
 

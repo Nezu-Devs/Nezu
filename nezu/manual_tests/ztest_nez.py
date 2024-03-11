@@ -1,4 +1,4 @@
-from nezu import say
+from ..nezu import say
 
 x = 13
 say('x')

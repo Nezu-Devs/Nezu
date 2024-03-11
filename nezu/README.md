@@ -21,6 +21,7 @@ Elegant debug module
       @4 l x:int  =>  13
   ```
 
+
 ### Table of content
 
 [NEZU](#nezu)
@@ -35,9 +36,6 @@ Elegant debug module
     - [Hardcoded config](#hardcoded-config)
 - [Output interpretation](#output-interpretation)
 - [Coloring output](#coloring-output)
-  - [Env vars coloring](#env-vars-coloring)
-  - [JSON coloring](#json-coloring)
-  - [Hardcoded coloring](#hardcoded-coloring)
 - [Hiding output](#hiding-output)
 - [TO DO](#to-do)
 
@@ -134,6 +132,8 @@ It will search for key `nezu` inside chosen file.
 - **_Args_**
   
   - `path:str = 'nezu.json'` - path of config file
+
+- **_Example Python code_**
 - **_Example config file_**
   ```json
   "nezu" {
@@ -174,18 +174,18 @@ If you don't want to use _env vars_ as config you can also call object `nezu` li
 ### Output interpretation
 
   ```
-  @7      b  print:function  =>  Prints the values to a stream, or to sys...
-  │      │  │     │             │
-  │      │  │     │             └───────── Value of inspected variable
-  │      │  │     │
-  │      │  │     └─────────────── Type of inspected variable.
-  │      │  │
-  │      │  └───────────── Name of inspected variable.
-  │      │
-  │      └──────── Scope of inspected variable.
-  │                l:local, g:global, b:build-in, u:undefined
-  |
-  └────── Line number of inspection.
+  @7 b print:function  =>  Prints the values to a stream, or to sys...
+   │ │ │     │             │
+   │ │ │     │             └─ Value of inspected variable
+   │ │ │     │
+   │ │ │     └─────────────── Type of inspected variable.
+   │ │ │
+   │ │ └───────────────────── Name of inspected variable.
+   │ │
+   │ └─────────────────────── Scope of inspected variable.
+   │                          l:local, g:global, b:build-in, u:undefined
+   |
+   └───────────────────────── Line number of inspection.
   ```
 
 ### Coloring output
@@ -193,7 +193,6 @@ If you don't want to use _env vars_ as config you can also call object `nezu` li
 By default nezu output is monochrome.
 If your terminal of choise support coloring you can change that.
 
-#### Env vars coloring
 
 - **_Example Bash command_**
   ```bash
@@ -205,18 +204,15 @@ If your terminal of choise support coloring you can change that.
   $env:NEZU_COLOR = $True
   py file.py
   ```
-
-#### JSON coloring
-
-- **_Example config file_**
+  
+- **_Example JSON config file_**
+  
   ```json
   "nezu" {
     "color": true,
   }
   ```
-
-#### Hardcoded coloring
-
+  
 - **_Example harcoded config_** 
 
   ```py
@@ -228,25 +224,46 @@ If your terminal of choise support coloring you can change that.
 
 ### Hiding output
 
-Function `say()` can be can be hidden into deeper levels of debug via `hide` parameter. Execution argument `--nezu` seeks only for says hidden at level 1. Now if you want to display more, you run your program with `--nezu-seek` integer argument. In example bellow only says hidden up to level 3 are displayed.
+Function `say()` can be can be hidden into deeper levels of debug via `hide` parameter. By default only say calls with `hide <= 0` will be printed. When you want to display more, change `NEZU_SEEK` env var. In examples bellow only says hidden up to level 3 are displayed.
+- **_Python code example_**
+    ```python
+    #file.py
+    from nezu import say
+    
+    say('egg', hide=1)
+    say('ham', hide=2)
+    say('spam', hide=3)
+    say('bacon', hide=4)
+    say('lobster', hide=5)
+    ```
 
-```python
-#file.py
-from nezu import say
+- **_Bash example_**
 
-say('egg', hide=1)
-say('ham', hide=2)
-say('spam', hide=3)
-say('bacon', hide=4)
-say('lobster', hide=5)
-```
+    ```bash
+    export NEZU_SEEK = 3 
+    python file.py
+          @4 u egg
+          @5 u ham
+          @6 u spam
+    ```
+    
+     **_PowerShell example_**
 
-```
-$ python file.py --nezu-seek=3
-@4      u  egg
-@5      u  ham
-@6      u  spam
-```
+    ```powershell
+    $ENV:NEZU_SEEK = 3 
+    python file.py
+          @4 u egg
+          @5 u ham
+          @6 u spam
+    ```
+    
+- **_JSON file example_**
+
+  ```json
+  "nezu" = {
+      "seek": 3
+  }
+  ```
 
 ### TO DO
 
@@ -270,7 +287,7 @@ $ python file.py --nezu-seek=3
 - [x] gitignore .vscode, \_\_pycache, dist
 - [ ] write proper documentation
   - [x] How to interpret output
-  - [ ] Configuration
+  - [x] Configuration
   - [ ] Explain arguments
     - [x] Hiding
     - [ ] Notes

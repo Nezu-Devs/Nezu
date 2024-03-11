@@ -1,7 +1,10 @@
 from ..nezu import real_nezu
+from os import environ as env
 
 
 def test_no_config():
+    env['NEZU_SEEK'] = '0'
+    env['NEZU_COLOR'] = '0'
     nezu = real_nezu()
     assert dict(nezu) == {'id': 'nezu', 'seek': 0, 'color': False}
 

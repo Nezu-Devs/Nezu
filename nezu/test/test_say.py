@@ -102,3 +102,13 @@ def test_scope_g(capsys):
 def test_multiline(capsys):
     nezu = real_nezu()
     nezu(1)
+    biggus = 'BIGGUS'
+    dickus = 'DICKUS'
+    nezu.say('biggus','dickus')
+    said = capsys.readouterr().out
+    a,b,c,d,_ = said.split('\n')
+    assert a[8:] == '-'*70
+    assert b[8:] == f'l biggus:str  =>  BIGGUS'
+    assert c[8:] == f'l dickus:str  =>  DICKUS'
+    assert d[8:] == '-'*70
+    # assert said == ''
