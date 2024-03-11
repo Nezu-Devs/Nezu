@@ -4,89 +4,92 @@
 [![License](https://img.shields.io/badge/license-MIT-teal)](https://opensource.org/license/mit/)
 [![Dependencies](https://img.shields.io/badge/dependencies-None-teal)](https://github.com/Nezu-Devs/Nezu/blob/main/pyproject.toml)
 
-### Elegant debugging module
+### Elegant debug module
 
-  - **_Python code example_**
-    ```py
-    # file.py
-    from nezu import say
-    x = 13
-    say('x')  # print debuging info
-    ```
-  - **_Bash commands to run_**
-    ```bash
-    export NEZU_SEEK = 1
-    $ py file.py
-        @4 l x:int  =>  13
-    ```
+- **_Python code example_**
+  ```py
+  # file.py
+  from nezu import say
+  x = 13
+  say('x')  # print debug info
+  ```
+- **_Bash commands to run_**
+  ```bash
+  export NEZU_SEEK = 1
+  $ py file.py
+      @4 l x:int  =>  13
+  ```
+
+### TOC
+
+[TOC]
 
 ### How to install?
 
-```bash
-$ python -m pip install nezu
-```
+- **_pip_**
 
-or
+  ```bash
+  $ python -m pip install nezu
+  ```
 
-```bash
-$ python -m poetry add nezu
-```
+- **_poetry_**
+
+  ```bash
+  $ python -m poetry add nezu
+  ```
 
 ### How to use?
 
-#### Basic usage
+- Inspect variable using [function say](#function-say) in your code.
+- [Configure](#config) Nezu to show output.
+- [Interpret](#output-interpretation) output and debug. 
 
-Inspect variable using `say` function. Pass name of variable you want to inspect as `str` argument.
+#### Function say
 
-- **Note**
+- **_Args_**
 
-  Output of `say` function is hidden by default. If you wannna see what nezu has to say you need to configure it first using `nezu` object. Simplest way is to call it with argument `1`.
+  - `*keys:str`
 
-```py
-# file.py
-from nezu import nezu, say
-nezu(1)
+    Names of varables to inspect
 
-say('egg')          # works on simple variables
-say('ham.spam')     # works on attributes
-say('spam["spam"]') # works on keys and indexes
-say('print')        # works on functions and build-ins
-```
+  - `note:str = None`
 
-<!--
-```bash
-$ python file.py
-     @4 u egg
-     @5 u ham.spam
-     @6 u spam["spam"]
-     @7 b print:function  =>  Prints the values to a stream, or to sys...
-``` -->
+    Optional comment. Ignored if equal to None.
 
-### How to interpret output?
+  - `hide:int = 1`
 
-```
-@7      b  print:function  =>  Prints the values to a stream, or to sys...
- │      │  │     │             │
- │      │  │     │             └───────── Value of inspected variable
- │      │  │     │
- │      │  │     └─────────────── Type of inspected variable.
- │      │  │
- │      │  └───────────── Name of inspected variable.
- │      │
- │      └──────── Scope of inspected variable.
- │                l:local, g:global, b:build-in, u:undefined
- |
- └────── Line number of inspection.
-```
+    How deep do you want to hide this message.
+    If hide <= 0, this message will be displayed by default.
 
-### Configuration
+
+- **_Python code example_**
+
+  ```py
+  # file.py
+  from nezu import nezu, say
+
+  egg = 3
+  ham = int()
+  spam = {'spam':'bacon'}
+
+  say('egg')          # works on simple variables
+  say('ham.real')     # works on attributes
+  say('print')        # works on functions and build-ins
+  say('spam["spam"]') # DOES NOT work on keys and indexes yet
+  ```
+
+- **_Note_**
+
+  Output of `say` function is hidden by default. If you wannna see what nezu has to say you need to configure env var `NEZU_SEEK` with value of `1` or more.
+
+### Config
 
 By default nezu is configured by _env vars_.
 This can be changed in code.
 
 #### Env vars config
 
-If you want to use default configuration method, change your _env vars_ in terminal and than run your Python file.
+If you want to use default config method, change your _env vars_ in terminal and than run your Python file.
 
 - **_Bash_**
 
@@ -107,11 +110,12 @@ If you want to use default configuration method, change your _env vars_ in termi
 
 #### JSON config
 
-If you dont want to use _env vars_ as configuration you can call `nezu.json()` to read configuration data from json file.
+If you don't want to use _env vars_ as config, you can call `nezu.json()` to read config data from json file.
 It will search for key `nezu` inside chosen file.
 
-- **_Params_**
-  - `path:str = 'nezu.json` - path of configuration file
+- **_Args_**
+  
+  - `path:str = 'nezu.json'` - path of config file
 - **_Example config file_**
   ```json
   "nezu" {
@@ -125,10 +129,11 @@ It will search for key `nezu` inside chosen file.
 
 #### Hardcoded config
 
-If you dont want to use _env vars_ as configuration you can also call object `nezu` like function to make hardcoded config.
+If you don't want to use _env vars_ as config you can also call object `nezu` like function to make hardcoded config.
 
-- **_Params_**
-  - `seek:int = 0` - debuging level
+- **_Args_**
+  
+  - `seek:int = 0` - debug level
   - `color:bool = False` - output coloring
   - `lock:bool = False` - lock this config
 - **_Example_**
@@ -146,6 +151,24 @@ If you dont want to use _env vars_ as configuration you can also call object `ne
   There is no build in support for _yaml_, _toml_ or _.env_ in _nezu_
   This is so _nezu_ can stay free of dependencies.
   However you can use hardcoded config to pass data from any config file.
+
+
+### Output interpretation
+
+  ```
+  @7      b  print:function  =>  Prints the values to a stream, or to sys...
+  │      │  │     │             │
+  │      │  │     │             └───────── Value of inspected variable
+  │      │  │     │
+  │      │  │     └─────────────── Type of inspected variable.
+  │      │  │
+  │      │  └───────────── Name of inspected variable.
+  │      │
+  │      └──────── Scope of inspected variable.
+  │                l:local, g:global, b:build-in, u:undefined
+  |
+  └────── Line number of inspection.
+  ```
 
 ### Coloring output
 
@@ -176,18 +199,18 @@ If your terminal of choise support coloring you can change that.
 
 #### Hardcoded coloring
 
-- **_Example_**
+- **_Example harcoded config_** 
 
   ```py
   from nezu import nezu, say
-
+  
   nezu(color = True)
   ...
   ```
 
 ### Hiding output
 
-Function `say()` can be can be hidden into deeper levels of debugging via `hide` parameter. Execution argument `--nezu` seeks only for says hidden at level 1. Now if you want to display more, you run your program with `--nezu-seek` integer argument. In example bellow only says hidden up to level 3 are displayed.
+Function `say()` can be can be hidden into deeper levels of debug via `hide` parameter. Execution argument `--nezu` seeks only for says hidden at level 1. Now if you want to display more, you run your program with `--nezu-seek` integer argument. In example bellow only says hidden up to level 3 are displayed.
 
 ```python
 #file.py
@@ -224,9 +247,9 @@ $ python file.py --nezu-seek=3
 - [ ] test on Pypy
 - [ ] test on Anaconda
 - [ ] add badges
-- [ ] format files with blue
-- [ ] remove obsolete tests
-- [ ] gitignore .vscode, \_\_pycache, dist
+- [x] format files with blue
+- [x] remove obsolete tests
+- [x] gitignore .vscode, \_\_pycache, dist
 - [ ] write proper documentation
   - [x] How to interpret output
   - [ ] Configuration
