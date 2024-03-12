@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nezu"
-version = "0.3.0"
+version = "0.3.3"
 description = "Elegant debuging module"
 authors = ["Chuck Cartwright"]
 license = "GPL-3.0"

@@ -1,0 +1,39 @@
+### TO DO
+
+- [x] add class method support?
+- [x] add coloring
+- [ ] add classes parameter (so you can print only group of logs)
+- [ ] indicate shadowing
+- [ ] write docstring for say
+  - [ ] write test for multiline output
+- [ ] write tests for name parser
+- [x] write tests for say
+- [ ] automate testing with Github actions?
+- [ ] automate deployment to PyPI with Github actions?
+- [ ] publish to Conda
+- [ ] test on different CPython versions
+- [ ] test on Pypy
+- [ ] test on Anaconda
+- [ ] add badges
+- [x] format files with blue
+- [x] remove obsolete tests
+- [x] gitignore .vscode, \_\_pycache, dist
+- [ ] write proper documentation
+  - [x] How to interpret output
+  - [x] Configuration
+  - [ ] Explain arguments
+    - [x] Hiding
+    - [ ] Notes
+    - [ ] args
+  - [ ] Note args
+  - [ ] brag in readme about being on pypy and and conda
+- [ ] make a helper function, that returns dictionary (so it's easier to assert and doesn't require `--nezu`)
+  - [ ] write function
+  - [ ] write docstring for it
+  - [ ] write tests for it
+  - [ ] document it in README
+- [ ] Write code of conduct
+- [ ] Change all egg, ham, spam, bacon to bigus, dickus, nortius, maximus, silius, sodus, incontinentia, buttocks, 
+- [ ] Write/generate TOC
+- [ ] Update README about configuration
+- [ ] Write docstrings to configuration functions
