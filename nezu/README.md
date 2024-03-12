@@ -38,7 +38,6 @@ Elegant debug module
     - [Hardcoded Config](#hardcoded-config)
 - [Coloring output](#coloring-output)
 - [Hiding output](#hiding-output)
-- [TO DO](#to-do)
 
 
 ### Installation
