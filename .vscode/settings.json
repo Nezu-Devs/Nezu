@@ -5,7 +5,22 @@
         "**/.hg": true,
         "**/CVS": true,
         "**/.DS_Store": true,
-        "**/Thumbs.db": true
+        "**/Thumbs.db": true,
+        "nezu/__pycache__": true,
+        "nezu/.pytest_cache": true,
+        "nezu/poetry.lock": true,
+        ".pytest_cache": true,
+        "nezu/manual_tests/__pycache__": true,
+        "nezu/manual_tests/.pytest_cache": true,
+        "nezu/dist": true
     },
-    "hide-files.files": []
+    "hide-files.files": [
+        "nezu/__pycache__",
+        "nezu/.pytest_cache",
+        "nezu/poetry.lock",
+        ".pytest_cache",
+        "nezu/manual_tests/__pycache__",
+        "nezu/manual_tests/.pytest_cache",
+        "nezu/dist"
+    ]
 }

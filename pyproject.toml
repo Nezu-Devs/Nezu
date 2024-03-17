@@ -1,10 +1,17 @@
 [tool.poetry]
 name = "nezu"
-version = "0.3.6"
+version = "0.4.0"
 description = "Elegant debuging module"
 authors = ["Chuck Cartwright"]
 license = "MIT"
 readme = "README.md"
+packages =[
+    # { include = "_os_env.py" },
+    # { include = "_parse.py" },
+    # { include = "nezu.py" },
+    { include = "nezu" }
+]
+
 
 # Only Uses Python Standard Library!
 [tool.poetry.dependencies]
@@ -20,4 +27,4 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-nezu = "nezu:main_function"
+nezu = "nezu.nezu:main_function"

@@ -1,0 +1,1 @@
+py -m poetry version minor; py -m poetry publish --build

@@ -5,12 +5,11 @@ else:
     from inspect import currentframe
     from typing import Any, Self
 
-
     class Nezu:
         """Nezu object"""
 
         def __init__(self, id: str):
-            from nezu.parts.os_env import os_bool, os_int
+            from nezu._os_env import os_bool, os_int
 
             self._id = id
             self.seek = os_int(id, 'SEEK')
@@ -19,7 +18,9 @@ else:
 
             self.hard = self.__call__
 
-        def __call__(self, seek: int = 0, color: bool = False, lock: bool = False):
+        def __call__(
+            self, seek: int = 0, color: bool = False, lock: bool = False
+        ):
             """
             Hard coded configuration.
 
@@ -104,7 +105,7 @@ else:
             """
 
             if self.seek >= hide:
-                from nezu.parts.parser import get_output
+                from nezu._parse import get_output
 
                 FRAME = currentframe().f_back
                 LINE = FRAME.f_lineno
@@ -123,7 +124,7 @@ else:
                     sufx = f'  |  << {note} >>' if note != None else ''
                 else:
                     tab = f'\n{" "*8}'
-                    prfx = f'@{LINE}'.rjust(7) + ' ' +  '-'*70 + tab
+                    prfx = f'@{LINE}'.rjust(7) + ' ' + '-' * 70 + tab
                     desc = tab.join(
                         [
                             get_output(LOCAL, GLOBAL, BINS, key, self.color)
@@ -135,14 +136,9 @@ else:
 
                 print(f'{prfx}{desc}{sufx}')
 
-
     def real_nezu():
         defaults = {'id': 'nezu'}
         return Nezu(**defaults)
 
-
     ず = nezu = real_nezu()
     ね = say = nezu.say
-
-
-

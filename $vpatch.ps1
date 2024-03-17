@@ -1,0 +1,1 @@
+py -m poetry version patch; py -m poetry publish --build

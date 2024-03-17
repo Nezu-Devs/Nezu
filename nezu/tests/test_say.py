@@ -1,4 +1,4 @@
-from ..nezu import real_nezu
+from nezu.nezu import real_nezu
 
 
 def test_hide(capsys):
@@ -104,11 +104,11 @@ def test_multiline(capsys):
     nezu(1)
     biggus = 'BIGGUS'
     dickus = 'DICKUS'
-    nezu.say('biggus','dickus')
+    nezu.say('biggus', 'dickus')
     said = capsys.readouterr().out
-    a,b,c,d,_ = said.split('\n')
-    assert a[8:] == '-'*70
+    a, b, c, d, _ = said.split('\n')
+    assert a[8:] == '-' * 70
     assert b[8:] == f'l biggus:str  =>  BIGGUS'
     assert c[8:] == f'l dickus:str  =>  DICKUS'
-    assert d[8:] == '-'*70
+    assert d[8:] == '-' * 70
     # assert said == ''

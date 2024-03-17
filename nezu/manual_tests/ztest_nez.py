@@ -3,6 +3,8 @@ from ..nezu import say
 x = 13
 say('x')
 input = 12
+
+
 def yolo():
     def yoyo():
         pass
@@ -15,17 +17,21 @@ def yolo():
     say('xx')
     say('input')
 
+
 yolo()
+
 
 class Dog:
     @staticmethod
     def sit(self):
-        '''wolololo'''
+        """wolololo"""
         pass
+
     def bark(self):
         say('self.sits')
         say('self.sit')
         # print(locals())
+
 
 fifi = Dog()
 

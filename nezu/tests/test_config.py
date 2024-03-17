@@ -1,4 +1,4 @@
-from ..nezu import real_nezu
+from nezu.nezu import real_nezu
 from os import environ as env
 
 

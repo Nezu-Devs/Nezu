@@ -1,5 +1,5 @@
 """Very fragile test code. Do not attempt to reformat."""
-from ..nezu import real_nezu
+from nezu.nezu import real_nezu
 
 nezu = real_nezu()
 nezu(1)
