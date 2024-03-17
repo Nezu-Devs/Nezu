@@ -10,7 +10,7 @@ else:
         """Nezu object"""
 
         def __init__(self, id: str):
-            from .parts.os_env import os_bool, os_int
+            from nezu.parts.os_env import os_bool, os_int
 
             self._id = id
             self.seek = os_int(id, 'SEEK')
@@ -104,7 +104,7 @@ else:
             """
 
             if self.seek >= hide:
-                from .parts.parser import get_output
+                from nezu.parts.parser import get_output
 
                 FRAME = currentframe().f_back
                 LINE = FRAME.f_lineno
