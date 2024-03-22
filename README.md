@@ -72,7 +72,7 @@ Elegant debug module
    │ │ └───────────────────── Name of inspected variable.
    │ │
    │ └─────────────────────── Scope of inspected variable.
-   │                          l:local, g:global, b:build-in, u:undefined
+   │                          l:local, g:global, b:built-in, u:undefined
    |
    └───────────────────────── Line number of inspection.
   ```
@@ -109,7 +109,7 @@ Inspect scopes and values of given keys (variable names etc.).
 
   say('egg')          # Works on simple variables.
   say('ham.real')     # Works on attributes.
-  say('print')        # Works on functions and build-ins.
+  say('print')        # Works on functions and built-ins.
   say('spam["spam"]') # DOES NOT work on keys and indexes yet.
   ```
 
@@ -199,7 +199,7 @@ If you don't want to use _env vars_ as config you can also call object `nezu` li
 
 - **_Tip_**
 
-  There is no build-in support for _yaml_, _toml_ or _.env_ in _nezu_
+  There is no built-in support for _yaml_, _toml_ or _.env_ in _nezu_
   This is so _nezu_ can stay free of dependencies.
   However you can use hardcoded config to pass data from any config file.
 
