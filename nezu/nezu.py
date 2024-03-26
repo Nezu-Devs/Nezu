@@ -137,6 +137,14 @@ else:
                 print(f'{prfx}{desc}{sufx}')
 
     def real_nezu():
+        '''
+        Creates default instance of Nezu.
+        # DO NOT USE THIS FUNCTION IN YOUR PROJECT!
+        ---
+        This function is only to be used in internal tests, so each test has unique Nezu instance identical to deafult Nezu instance.
+
+        If you want multiple nezu instances, create them using constructor function `Nezu(id='my_nezu')`
+        '''
         defaults = {'id': 'nezu'}
         return Nezu(**defaults)
 
