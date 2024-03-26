@@ -7,21 +7,21 @@
 Elegant debug module
 
 - **_Python Code Example_**
-  
+
   ```py
   # file.py
   from nezu import say
   x = 13
   say('x')  # Prints debug info.
   ```
+
 - **_Bash Commands to Debug_**
-  
+
   ```bash
   export NEZU_SEEK=1
   python file.py
-      @4 l x:int  =>  13
+      @4 L.. x:int  =>  13
   ```
-
 
 ### Table of Contents
 
@@ -30,15 +30,14 @@ Elegant debug module
 - [Table of Contents](#table-of-contents)
 - [Installation](#installation)
 - [Usage](#usage)
-    - [Output Interpretation](#output-interpretation)
-    - [Function say](#function-say)
-- [Config](#config) 
-    - [Env Vars Config](#env-vars-config)
-    - [JSON Config](#json-config)
-    - [Hardcoded Config](#hardcoded-config)
+  - [Output Interpretation](#output-interpretation)
+  - [Function say](#function-say)
+- [Config](#config)
+  - [Env Vars Config](#env-vars-config)
+  - [JSON Config](#json-config)
+  - [Hardcoded Config](#hardcoded-config)
 - [Coloring output](#coloring-output)
 - [Hiding output](#hiding-output)
-
 
 ### Installation
 
@@ -58,24 +57,34 @@ Elegant debug module
 
 - Inspect variable using [function say](#function-say) in your code.
 - [Configure](#config) Nezu to show output.
-- [Interpret](#output-interpretation) output and debug. 
+- [Interpret](#output-interpretation) output and debug.
 
 #### Output Interpretation
 
-  ```
-  @7 b print:function  =>  Prints the values to a stream, or to sys...
-   │ │ │     │             │
-   │ │ │     │             └─ Value of inspected variable
-   │ │ │     │
-   │ │ │     └─────────────── Type of inspected variable.
-   │ │ │
-   │ │ └───────────────────── Name of inspected variable.
-   │ │
-   │ └─────────────────────── Scope of inspected variable.
-   │                          l:local, g:global, b:built-in, u:undefined
-   |
-   └───────────────────────── Line number of inspection.
-  ```
+```
+@7 ..B print:function  =>  Prints the values to a stream, or to sys...
+ │ │   │     │             │
+ │ │   │     │             └─ Value of inspected variable
+ │ │   │     │
+ │ │   │     └─────────────── Type of inspected variable.
+ │ │   │
+ │ │   └───────────────────── Name of inspected variable.
+ │ │
+ │ └───────────────────────── Scope of inspected variable (see bollow).
+ |
+ └─────────────────────────── Line number of inspection.
+```
+
+- **_Scope codes_**
+  - `L..` - local scope, no shadowing
+  - `Lg.` - local scope, shadowing global
+  - `L.b` - local scope, shadowing built-in
+  - `Lgb` - local scope, shadowing global and built-in
+  - `.G.` - Global scope, no shadowing
+  - `.Gb` - Global scope, shadowing built-in
+  - `..B` - Built-in scope, no shadowing
+  - `...` - Undefined 
+
 #### Function `say`
 
 Inspect scopes and values of given keys (variable names etc.).
@@ -95,7 +104,6 @@ Inspect scopes and values of given keys (variable names etc.).
     This argument is compared with `nezu.seek`.
     If `nezu.seek >= hide` this debug inspection will be displayed.
     If hide <= 0, this message will be displayed by default.
-
 
 - **_Python Code Example_**
 
@@ -121,10 +129,10 @@ Inspect scopes and values of given keys (variable names etc.).
 
 Module `nezu` creates `nezu` object that has config attributes used by function `say`.
 
-- ***Attributes***
+- **_Attributes_**
   - `nezu.seek:int = 0`
-  Compared to `say` argument`hide`, if `nezu.seek >= hide` then `say` will be printed.
-  - `nezu.color:bool = False` 
+    Compared to `say` argument`hide`, if `nezu.seek >= hide` then `say` will be printed.
+  - `nezu.color:bool = False`
     Determines if output of `say` function should be colored.
   - `nezu.lock:bool = False`
     If `nezu.lock = True`, this config cannot be changed later, during runtime.
@@ -156,7 +164,7 @@ If you don't want to use _env vars_ as config, you can call `nezu.json()` to rea
 It will search for key `nezu` inside chosen file.
 
 - **_Args_**
-  
+
   - `path:str = 'nezu.json'` - path of config file
 
 - **_Example Python Code_**
@@ -167,7 +175,7 @@ It will search for key `nezu` inside chosen file.
   ```
 
 - **_Example Config File_**
-  
+
   ```json
   "nezu": {
     "seek": 1,
@@ -183,10 +191,11 @@ It will search for key `nezu` inside chosen file.
 If you don't want to use _env vars_ as config you can also call object `nezu` like function to make hardcoded config.
 
 - **_Args_**
-  
+
   - `seek:int = 0` - debug level
   - `color:bool = False` - output coloring
   - `lock:bool = False` - lock this config
+
 - **_Example_**
 
   ```py
@@ -203,40 +212,38 @@ If you don't want to use _env vars_ as config you can also call object `nezu` li
   This is so _nezu_ can stay free of dependencies.
   However you can use hardcoded config to pass data from any config file.
 
-
-
 ### Coloring output
 
 By default nezu output is monochrome.
 If your terminal of choise support coloring you can change that.
 
-
 - **_Example Bash Command_**
-  
+
   ```bash
   export NEZU_COLOR=1
   python file.py
   ```
+
 - **_Example PowerShell Command_**
-  
+
   ```powershell
   $env:NEZU_COLOR = $True
   python file.py
   ```
-  
+
 - **_Example JSON Config File_**
-  
+
   ```json
   "nezu": {
     "color": true,
   }
   ```
-  
-- **_Example Hardcoded Config_** 
+
+- **_Example Hardcoded Config_**
 
   ```py
   from nezu import nezu, say
-  
+
   nezu(color = True)
   ...
   ```
@@ -244,39 +251,40 @@ If your terminal of choise support coloring you can change that.
 ### Hiding Output
 
 Function `say()` can be hidden more by `hide` parameter. By default only say calls with `hide <= nezu.seek` will be printed. In examples bellow only says hidden up to level 3 are displayed.
+
 - **_Python Code Example_**
-  
-    ```python
-    #file.py
-    from nezu import say
-    
-    say('egg', hide=1)
-    say('ham', hide=2)
-    say('spam', hide=3)
-    say('bacon', hide=4)
-    say('lobster', hide=5)
-    ```
-    
+
+  ```python
+  #file.py
+  from nezu import say
+
+  say('egg', hide=1)
+  say('ham', hide=2)
+  say('spam', hide=3)
+  say('bacon', hide=4)
+  say('lobster', hide=5)
+  ```
+
 - **_Bash Example_**
 
-    ```bash
-    export NEZU_SEEK=3 
-    python file.py
-          @4 u egg
-          @5 u ham
-          @6 u spam
-    ```
-    
+  ```bash
+  export NEZU_SEEK=3
+  python file.py
+        @4 ... egg
+        @5 ... ham
+        @6 ... spam
+  ```
+
 - **_PowerShell Example_**
 
-    ```powershell
-    $ENV:NEZU_SEEK = 3 
-    python file.py
-          @4 u egg
-          @5 u ham
-          @6 u spam
-    ```
-    
+  ```powershell
+  $ENV:NEZU_SEEK = 3
+  python file.py
+        @4 ... egg
+        @5 ... ham
+        @6 ... spam
+  ```
+
 - **_JSON File Example_**
 
   ```json
