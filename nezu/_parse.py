@@ -22,7 +22,10 @@ def get_output(loc, glob, bins, long_str, color):
     if key in loc:
         try:
             _val = eval(long_str, glob, loc)
-            _src = 'l'
+
+            _src = 'L'
+            _src = _src + ('g' if key in glob else '.')
+            _src = _src + ('b' if key in bins else '.')
             _type = type(_val).__name__
             _sep1 = ':'
             _sep2 = '  =>  '
@@ -32,7 +35,8 @@ def get_output(loc, glob, bins, long_str, color):
     elif key in glob:
         try:
             _val = eval(long_str, glob, loc)
-            _src = 'g'
+            _src = '.G'
+            _src = _src + ('b' if key in bins else '.')
             _type = type(_val).__name__
             _sep1 = ':'
             _sep2 = '  =>  '
@@ -42,7 +46,7 @@ def get_output(loc, glob, bins, long_str, color):
     elif key in bins:
         try:
             _val = eval(long_str, bins)
-            _src = 'b'
+            _src = '..B'
             _type = (
                 type(_val).__name__
                 if type(_val).__name__ != 'builtin_function_or_method'
@@ -57,7 +61,7 @@ def get_output(loc, glob, bins, long_str, color):
         is_undefined = True
 
     if is_undefined:
-        _src = 'u'
+        _src = '...'
         _val = ''
         _type = ''
         _sep1 = ''

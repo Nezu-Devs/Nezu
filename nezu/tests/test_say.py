@@ -5,9 +5,9 @@ def test_hide(capsys):
     nezu = real_nezu()
     nezu(2)
     lis = [
-        'l i:int  =>  0',
-        'l i:int  =>  1',
-        'l i:int  =>  2',
+        'L.. i:int  =>  0',
+        'L.. i:int  =>  1',
+        'L.. i:int  =>  2',
         '',
         '',
     ]
@@ -23,7 +23,7 @@ def test_color(capsys):
     biggus = 'dickus'
     nezu.say('biggus')
     said = capsys.readouterr().out
-    expected = f'\u001b[36ml\u001b[35m \u001b[0mbiggus\u001b[35m:\u001b[31mstr\u001b[35m  =>  \u001b[33mdickus\u001b[0m'
+    expected = f'\u001b[36mL..\u001b[35m \u001b[0mbiggus\u001b[35m:\u001b[31mstr\u001b[35m  =>  \u001b[33mdickus\u001b[0m'
     assert said[8:-1] == expected
 
 
@@ -47,7 +47,7 @@ def test_obj(capsys):
     biggus = Biggus()
     nezu.say('biggus.txt')
     said = capsys.readouterr().out
-    expected = f'l biggus.txt:str  =>  dickus'
+    expected = f'L.. biggus.txt:str  =>  dickus'
     assert said[8:-1] == expected
 
 
@@ -67,7 +67,7 @@ def test_nesterd_obj(capsys):
     spam = Spam()
     nezu.say('spam.child.child.txt')
     said = capsys.readouterr().out
-    expected = f'l spam.child.child.txt:str  =>  bacon'
+    expected = f'L.. spam.child.child.txt:str  =>  bacon'
     assert said[8:-1] == expected
 
 
@@ -76,27 +76,72 @@ def test_scope_b(capsys):
     nezu(1)
     nezu.say('print')
     said = capsys.readouterr().out
-    assert said[8] == f'b'
+    assert said[8:11] == f'..B'
 
 
 def test_scope_l(capsys):
     nezu = real_nezu()
     nezu(1)
-    print = 'egg'
-    nezu.say('print')
+    ham = 'egg'
+    nezu.say('ham')
     said = capsys.readouterr().out
-    assert said[8] == f'l'
+    assert said[8:11] == f'L..'
 
 
-biggus = 'dickus'
+global_biggus = 'dickus'
 
 
 def test_scope_g(capsys):
     nezu = real_nezu()
     nezu(1)
-    nezu.say('biggus')
+    nezu.say('global_biggus')
     said = capsys.readouterr().out
-    assert said[8] == f'g'
+    assert said[8:11] == f'.G.'
+
+
+def test_shadowing_L_b(capsys):
+    nezu = real_nezu()
+    nezu(1)
+    print = 'egg'
+    nezu.say('print')
+    said = capsys.readouterr().out
+    assert said[8:11] == f'L.b'
+
+
+global_nortius = 'maximus'
+
+
+def test_shadowing_Lg(capsys):
+    nezu = real_nezu()
+    nezu(1)
+    global_nortius = 'minimus'
+    nezu.say('global_nortius')
+    said = capsys.readouterr().out
+    assert said[8:11] == f'Lg.'
+
+
+default_breakpoint = breakpoint
+breakpoint = 69
+
+
+def test_shadowing_Gb(capsys):
+    nezu = real_nezu()
+    nezu(1)
+    nezu.say('breakpoint')
+    said = capsys.readouterr().out
+    assert said[8:11] == f'.Gb'
+
+
+def test_shadowing_Lgb(capsys):
+    nezu = real_nezu()
+    nezu(1)
+    breakpoint = 420
+    nezu.say('breakpoint')
+    said = capsys.readouterr().out
+    assert said[8:11] == f'Lgb'
+
+
+breakpoint = default_breakpoint
 
 
 def test_multiline(capsys):
@@ -108,7 +153,7 @@ def test_multiline(capsys):
     said = capsys.readouterr().out
     a, b, c, d, _ = said.split('\n')
     assert a[8:] == '-' * 70
-    assert b[8:] == f'l biggus:str  =>  BIGGUS'
-    assert c[8:] == f'l dickus:str  =>  DICKUS'
+    assert b[8:] == f'L.. biggus:str  =>  BIGGUS'
+    assert c[8:] == f'L.. dickus:str  =>  DICKUS'
     assert d[8:] == '-' * 70
     # assert said == ''
