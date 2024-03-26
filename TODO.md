@@ -3,9 +3,9 @@
 - [x] add class method support?
 - [x] add coloring
 - [ ] add classes parameter (so you can print only group of logs)
-- [ ] indicate shadowing
-- [ ] write docstring for say
-  - [ ] write test for multiline output
+- [x] indicate shadowing
+- [x] write docstring for say
+- [x] write test for multiline output
 - [ ] write tests for name parser
 - [x] write tests for say
 - [ ] automate testing with Github actions?
@@ -21,7 +21,7 @@
 - [ ] write proper documentation
   - [x] How to interpret output
   - [x] Configuration
-  - [ ] Explain arguments
+  - [x] Explain arguments
     - [x] Hiding
     - [ ] Notes
     - [ ] args
@@ -35,5 +35,5 @@
 - [ ] Write code of conduct
 - [ ] Change all egg, ham, spam, bacon to bigus, dickus, nortius, maximus, silius, sodus, incontinentia, buttocks, 
 - [ ] Write/generate TOC
-- [ ] Update README about configuration
+- [x] Update README about configuration
 - [ ] Write docstrings to configuration functions
