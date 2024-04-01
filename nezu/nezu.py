@@ -13,36 +13,40 @@ else:
 
             self._id = id
             self.seek = os_int(id, 'SEEK')
-            self.bps = os_bool(id, 'BPS')
+            self.flow = os_int(id, 'FLOW')
             self.color = os_bool(id, 'COLOR')
             self._locked = os_bool(id, 'LOCK')
 
             self.hard = self.__call__
 
         def __call__(
-            self, seek: int = 0, bps:int = 5, color: bool = False, lock: bool = False
+            self, seek: int = 0, flow:int = 5, color: bool = False, lock: bool = False
         ):
             """
             Hard coded configuration.
 
             Parameters
             ------------
-                seek: int = 0
+                - seek: int = 0
+
                     How deep to seek for hidden calls of `dbg` and `say` functions.
                     Functions `dbg` and `say` are called with `hide` parameter (1 by default).
                     If `seek => hide` message will be displayed.
-                bps: int = 5
-                    Breakpoints.
+
+                - flow: int = 5
+
                     Determines if call of function `dgb` or `say` is considered breakpoint.
-                    Functions `dbg` and `say` are called with `flow` parameter (9 by default).
-                    If `bps => flow` message will be displayed.
-                color: bool = False
+                    Functions `dbg` and `say` are called with `bp` parameter (0 by default).
+                    If `flow < bp` message will be displayed.
+
+                - color: bool = False
+
                     Determine if output is colored.
 
             """
             if not self._locked:
                 self.seek = seek
-                self.bps = bps
+                self.flow = flow
                 self.color = color
                 self._locked = lock
             else:
@@ -55,7 +59,7 @@ else:
                 [
                     ('id', self._id),
                     ('seek', self.seek),
-                    ('seek', self.bps),
+                    ('flow', self.flow),
                     ('color', self.color),
                 ]
             )
@@ -71,22 +75,16 @@ else:
                     all_data = json.load(file)
                 nezu_data = all_data.get(self._id, {})
                 self.seek = nezu_data.get('seek', 0)
-                self.bps = nezu_data.get('bps', 0)
+                self.flow = nezu_data.get('flow', 5)
                 self.color = nezu_data.get('color', False)
 
             else:
                 raise RuntimeError(
                     f'This Nezu object #{self._id} is locked and cannot be changed.'
                 )
-        def _printput(txt:str, file=None):
-            x = input(txt)
-            # if file != None:
-            #     try:
-            #         print(txt, x, file=file)
-            #     except Exception:
-            #         pass
 
-        def say(self, val, hide: int = 1, flow: int = 9):
+
+        def say(self, val, hide: int = 1, bp: int = 0):
             """
             Parameters
             ------------
@@ -95,15 +93,18 @@ else:
 
                 Value to display.
 
-            - `hide:int=1`
+            - `hide:int = 1`
 
                 How deep do you want to hide this message.
                 If `hide <= 0`, this message will be displayed by default.
 
+            - `bp:int = 0`
+
+                Determines if this is considered breakpoint.
 
             Description
             ------------
-            Function `say` displays following data in that order for each inspected varable:
+            Simple literal output. Displays:
 
             - number of line it was called at
 
@@ -114,15 +115,15 @@ else:
                 LINE = FRAME.f_lineno
                 prfx = f'@{LINE}'.rjust(7) + ' '
                 txt = f'{prfx}\033[92m{val}\033[0m' if self.color else f'{prfx}{val}'
-                if self.bps >= flow:
+                if self.flow >= bp:
+                    print(txt)
+                else:
                     # sufx = f'\u001b[35mBP\033[0m' if self.color else 'BP'
                     # input(f'{txt} {sufx}')
                     input(f'{txt}')
-                else:
-                    print(txt)
                     
                 
-        def dbg(self, *keys: str, note: str = None, hide: int = 1, flow: int = 9) -> None:
+        def dbg(self, *keys: str, note: str = None, hide: int = 1, bp: int = 0) -> None:
             """
             Parameters
             ------------
@@ -137,8 +138,13 @@ else:
 
             - `hide:int=1`
 
-                How deep do you want to hide this message.
-                If `hide <= 0`, this message will be displayed by default.
+                This argument is compared with `Nezu.seek`.
+                If `Nezu.seek >= hide` this debug inspection will be displayed.
+
+            - `bp:int = 0`
+
+                    This argument is compared with `Nezu.flow`.
+                    If `Nezu.flow < bp` this debug inspection will be considered breakpoint.
 
 
             Description
@@ -186,12 +192,12 @@ else:
                     sufx = f'{tab}<< {note} >>' if note != None else ''
                     sufx += f'{tab}{"-"*70}'
                 txt = f'{prfx}{desc}{sufx}'
-                if self.bps >= flow:
+                if self.flow >= bp:
+                    print(txt)
+                else:
                     # sufx2 = f'\u001b[35mBP\033[0m' if self.color else 'BP'
                     # input(f'{txt} {sufx2}')
                     input(txt)
-                else:
-                    print(txt)
 
     def real_nezu():
         """

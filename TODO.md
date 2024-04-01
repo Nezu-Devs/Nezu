@@ -2,8 +2,9 @@
 
 - [x] Cannot import Nezu form nezu - fix that
 - [x] Simple printlike function is needed - make say simply try to print data and dbg work like cyrrent say
-- [ ] Create breakpoints mechanic - simmilar to hide and seek
-- [ ] Make it so multiline objects are properly displayed (remove *args functionality)
+- [x] Create breakpoints mechanic - simmilar to hide and seek
+- [x] Describe breakpoints mechanic in README
+- [ ] Make  multiline objects display properly
 - [x] add class method support?
 - [x] add coloring
 - [ ] add classes parameter (so you can print only group of logs)

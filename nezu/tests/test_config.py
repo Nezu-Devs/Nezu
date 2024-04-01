@@ -5,20 +5,21 @@ from os import environ as env
 def test_no_config():
     env['NEZU_SEEK'] = '0'
     env['NEZU_COLOR'] = '0'
+    env['NEZU_FLOW'] = '5'
     nezu = real_nezu()
-    assert dict(nezu) == {'id': 'nezu', 'seek': 0, 'color': False}
+    assert dict(nezu) == {'id': 'nezu', 'seek': 0, 'flow':5, 'color': False}
 
 
 def test_hard_config_seek():
     nezu = real_nezu()
     nezu(seek=1)
-    assert dict(nezu) == {'id': 'nezu', 'seek': 1, 'color': False}
+    assert dict(nezu) == {'id': 'nezu', 'seek': 1, 'flow':5, 'color': False}
 
 
 def test_hard_config_color():
     nezu = real_nezu()
     nezu(color=True)
-    assert dict(nezu) == {'id': 'nezu', 'seek': 0, 'color': True}
+    assert dict(nezu) == {'id': 'nezu', 'seek': 0, 'flow':5, 'color': True}
 
 
 def test_json_config_seek():
@@ -27,7 +28,7 @@ def test_json_config_seek():
         print(content, file=f)
     nezu = real_nezu()
     nezu.json()
-    assert dict(nezu) == {'id': 'nezu', 'seek': 1, 'color': False}
+    assert dict(nezu) == {'id': 'nezu', 'seek': 1, 'flow':5, 'color': False}
 
 
 def test_json_config_color():
@@ -36,4 +37,4 @@ def test_json_config_color():
         print(content, file=f)
     nezu = real_nezu()
     nezu.json()
-    assert dict(nezu) == {'id': 'nezu', 'seek': 0, 'color': True}
+    assert dict(nezu) == {'id': 'nezu', 'seek': 0, 'flow':5, 'color': True}

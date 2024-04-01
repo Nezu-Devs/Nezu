@@ -17,7 +17,7 @@ def test_hide(capsys):
 
 def test_color(capsys):
     nezu = real_nezu()
-    nezu(1, True)
+    nezu(1, color=True)
     biggus = 'dickus'
     nezu.say(biggus)
     said = capsys.readouterr().out
