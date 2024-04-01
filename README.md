@@ -23,6 +23,14 @@ Elegant debug module
       @4 L.. x:int  =>  13
   ```
 
+- **_Powershell Commands to Debug_**
+
+  ```bash
+  $env:NEZU_SEEK = 1
+  python file.py
+      @4 L.. x:int  =>  13
+  ```
+
 ### Table of Contents
 
 [NEZU](#nezu)
