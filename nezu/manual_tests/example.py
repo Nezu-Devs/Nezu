@@ -1,7 +1,7 @@
 # file.py
 from ..nezu import nezu, dbg
 
-nezu(1)
+nezu(1, color=1)
 
 egg = 3
 ham = int()

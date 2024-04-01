@@ -11,6 +11,42 @@ def parse_name(long_str):
 
     return key
 
+def parse_desc(_type, val, key):
+    if _type == 'function' and val.__doc__:
+        # _desc = (
+        #     f'{val.__doc__}'[:40] + '...'
+        #     if len(val.__doc__) > 43
+        #     else val.__doc__
+        # )
+        _desc = val.__doc__
+    elif _type == 'function':
+        _desc = 'No docstring'
+    else:
+        _desc = str(val)
+    
+    cut_lines = '\n'+' '*12
+    if '\n' in _desc:
+        l = _desc.split('\n')
+        for line in l:
+            while len(line)>80:
+                cut_lines += line[0:80] + '\n'+' '*12
+                line = line[80:]
+            else:
+                cut_lines += line +'\n'+' '*12
+    elif len(_desc)+len(_type)+len(key)>80-7:
+        print(len(_desc))
+        print(len(_type))
+        print(len(key))
+        while len(_desc)>80:
+            print(len(_desc))
+            cut_lines += _desc[0:80] + '\n'+' '*12
+            _desc = _desc[80:]
+        else:
+            cut_lines += _desc
+    else:
+        cut_lines = _desc
+    return cut_lines
+    
 
 def get_output(loc, glob, bins, long_str, color):
     # from .name_parser import parse_name
@@ -67,16 +103,8 @@ def get_output(loc, glob, bins, long_str, color):
         _sep1 = ''
         _sep2 = ''
 
-    if _type == 'function' and _val.__doc__:
-        _desc = (
-            f'{_val.__doc__}'[:40] + '...'
-            if len(_val.__doc__) > 43
-            else _val.__doc__
-        )
-    elif _type == 'function':
-        _desc = 'No docstring'
-    else:
-        _desc = _val
+    _desc = parse_desc(_type,_val, long_str)
+
 
     return (
         f'\u001b[36m{_src}\u001b[35m{_sep0}\u001b[0m{long_str}\u001b[35m{_sep1}\u001b[31m{_type}\u001b[35m{_sep2}\u001b[33m{_desc}\u001b[0m'

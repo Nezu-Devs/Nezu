@@ -4,7 +4,7 @@
 - [x] Simple printlike function is needed - make say simply try to print data and dbg work like cyrrent say
 - [x] Create breakpoints mechanic - simmilar to hide and seek
 - [x] Describe breakpoints mechanic in README
-- [ ] Make  multiline objects display properly
+- [x] Make multiline objects display properly
 - [x] add class method support?
 - [x] add coloring
 - [ ] add classes parameter (so you can print only group of logs)

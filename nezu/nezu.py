@@ -182,7 +182,7 @@ else:
                     sufx = f'  |  << {note} >>' if note != None else ''
                 else:
                     tab = f'\n{" "*8}'
-                    prfx = f'@{LINE}'.rjust(7) + ' ' + '-' * 70 + tab
+                    prfx = f'@{LINE}'.rjust(7) + ' ' + '-' * 84 + tab
                     desc = tab.join(
                         [
                             get_output(LOCAL, GLOBAL, BINS, key, self.color)
@@ -190,7 +190,7 @@ else:
                         ]
                     )
                     sufx = f'{tab}<< {note} >>' if note != None else ''
-                    sufx += f'{tab}{"-"*70}'
+                    sufx += f'{tab}{"-"*84}'
                 txt = f'{prfx}{desc}{sufx}'
                 if self.flow >= bp:
                     print(txt)

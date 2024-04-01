@@ -152,8 +152,8 @@ def test_multiline(capsys):
     nezu.dbg('biggus', 'dickus')
     said = capsys.readouterr().out
     a, b, c, d, _ = said.split('\n')
-    assert a[8:] == '-' * 70
+    assert a[8:] == '-' * 84
     assert b[8:] == f'L.. biggus:str  =>  BIGGUS'
     assert c[8:] == f'L.. dickus:str  =>  DICKUS'
-    assert d[8:] == '-' * 70
+    assert d[8:] == '-' * 84
     # assert said == ''
