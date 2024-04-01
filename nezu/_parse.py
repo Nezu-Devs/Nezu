@@ -34,11 +34,7 @@ def parse_desc(_type, val, key):
             else:
                 cut_lines += line +'\n'+' '*12
     elif len(_desc)+len(_type)+len(key)>80-7:
-        print(len(_desc))
-        print(len(_type))
-        print(len(key))
         while len(_desc)>80:
-            print(len(_desc))
             cut_lines += _desc[0:80] + '\n'+' '*12
             _desc = _desc[80:]
         else:
