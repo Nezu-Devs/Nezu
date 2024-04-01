@@ -10,9 +10,9 @@ Elegant debug module
 
   ```py
   # file.py
-  from nezu import say
+  from nezu import dbg
   x = 13
-  say('x')  # Prints debug info.
+  dbg('x')  # Prints debug info.
   ```
 
 - **_Bash Commands to Debug_**
@@ -39,7 +39,7 @@ Elegant debug module
 - [Installation](#installation)
 - [Usage](#usage)
   - [Output Interpretation](#output-interpretation)
-  - [Function say](#function-say)
+  - [Function dbg](#function-dbg)
 - [Config](#config)
   - [Env Vars Config](#env-vars-config)
   - [JSON Config](#json-config)
@@ -63,7 +63,7 @@ Elegant debug module
 
 ### Usage
 
-- Inspect variable using [function say](#function-say) in your code.
+- Inspect variable using [function dbg](#function-dbg) in your code.
 - [Configure](#config) Nezu to show output.
 - [Interpret](#output-interpretation) output and debug.
 
@@ -93,7 +93,7 @@ Elegant debug module
   - `..B` - Built-in scope, no shadowing
   - `...` - Undefined 
 
-#### Function `say`
+#### Function `dbg`
 
 Inspect scopes and values of given keys (variable names etc.).
 
@@ -117,31 +117,31 @@ Inspect scopes and values of given keys (variable names etc.).
 
   ```py
   # file.py
-  from nezu import say
+  from nezu import dbg
 
   egg = 3
   ham = int()
   spam = {'spam':'bacon'}
 
-  say('egg')          # Works on simple variables.
-  say('ham.real')     # Works on attributes.
-  say('print')        # Works on functions and built-ins.
-  say('spam["spam"]') # DOES NOT work on keys and indexes yet.
+  dbg('egg')          # Works on simple variables.
+  dbg('ham.real')     # Works on attributes.
+  dbg('print')        # Works on functions and built-ins.
+  dbg('spam["spam"]') # DOES NOT work on keys and indexes yet.
   ```
 
 - **_Note_**
 
-  Output of `say` function is hidden by default. If you want to see what nezu has to say you need to configure env var `NEZU_SEEK` with value of `1` or more.
+  Output of `dbg` function is hidden by default. If you want to see dbg you need to configure env var `NEZU_SEEK` with value of `1` or more.
 
 ### Config
 
-Module `nezu` creates `nezu` object that has config attributes used by function `say`.
+Module `nezu` creates `nezu` object that has config attributes used by function `dbg`.
 
 - **_Attributes_**
   - `nezu.seek:int = 0`
-    Compared to `say` argument`hide`, if `nezu.seek >= hide` then `say` will be printed.
+    Compared to `dbg` argument`hide`, if `nezu.seek >= hide` then `dbg` will be printed.
   - `nezu.color:bool = False`
-    Determines if output of `say` function should be colored.
+    Determines if output of `dbg` function should be colored.
   - `nezu.lock:bool = False`
     If `nezu.lock = True`, this config cannot be changed later, during runtime.
 
@@ -178,7 +178,7 @@ It will search for key `nezu` inside chosen file.
 - **_Example Python Code_**
 
   ```python
-  from nezu import nezu, say
+  from nezu import nezu, dbg
   nezu.json('my/json/file.json')
   ```
 
@@ -208,7 +208,7 @@ If you don't want to use _env vars_ as config you can also call object `nezu` li
 
   ```py
   # file.py
-  from nezu import nezu, say
+  from nezu import nezu, dbg
 
   nezu(1, True, False)
   ...
@@ -250,7 +250,7 @@ If your terminal of choise support coloring you can change that.
 - **_Example Hardcoded Config_**
 
   ```py
-  from nezu import nezu, say
+  from nezu import nezu, dbg
 
   nezu(color = True)
   ...
@@ -258,19 +258,19 @@ If your terminal of choise support coloring you can change that.
 
 ### Hiding Output
 
-Function `say()` can be hidden more by `hide` parameter. By default only say calls with `hide <= nezu.seek` will be printed. In examples bellow only says hidden up to level 3 are displayed.
+Function `dbg()` can be hidden more by `hide` parameter. By default only `dbg` calls with `hide <= nezu.seek` will be printed. In examples bellow only `dbg` hidden up to level 3 are displayed.
 
 - **_Python Code Example_**
 
   ```python
   #file.py
-  from nezu import say
+  from nezu import dbg
 
-  say('egg', hide=1)
-  say('ham', hide=2)
-  say('spam', hide=3)
-  say('bacon', hide=4)
-  say('lobster', hide=5)
+  dbg('egg', hide=1)
+  dbg('ham', hide=2)
+  dbg('spam', hide=3)
+  dbg('bacon', hide=4)
+  dbg('lobster', hide=5)
   ```
 
 - **_Bash Example_**

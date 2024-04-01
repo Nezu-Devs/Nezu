@@ -27,8 +27,8 @@ else:
             Parameters
             ------------
                 seek: int = 0
-                    How deep to seek for hidden calls of `say` function?
-                    Say function is called with `hide` parameter (0 by default).
+                    How deep to seek for hidden calls of `dbg` function?
+                    dbg function is called with `hide` parameter (0 by default).
                     If `seek => hide` message will be displayed.
                 color: bool = False
                     Determine if output is colored.
@@ -70,7 +70,26 @@ else:
                     f'This Nezu object #{self._id} is locked and cannot be changed.'
                 )
 
-        def say(self, *keys: str, note: str = None, hide: int = 1) -> None:
+        def say(self, var, hide: int = 1):
+            if self.seek >= hide:
+                FRAME = currentframe().f_back
+                LINE = FRAME.f_lineno
+                # palete = {
+                #     'default': '\033[0m',
+                #     'red': '\033[91m',
+                #     'green': '\033[92m',
+                #     'yellow': '\033[93m',
+                #     'blue': '\033[94m',
+                #     'purple': '\033[95m',
+                #     'cyan': '\033[96m',
+                # }
+                print(
+                    f'@{LINE} \033[92m{var}\033[0m'
+                    if self.color
+                    else f'@{LINE} {var}'
+                )
+
+        def dbg(self, *keys: str, note: str = None, hide: int = 1) -> None:
             """
             Parameters
             ------------
@@ -91,7 +110,7 @@ else:
 
             Description
             ------------
-            Function `say` displays following data in that order for each inspected varable:
+            Function `dbg` displays following data in that order for each inspected varable:
 
             - number of line it was called at
 
@@ -149,4 +168,5 @@ else:
         return Nezu(**defaults)
 
     ず = nezu = real_nezu()
-    ね = say = nezu.say
+    虫 = dbg = nezu.dbg
+    話 = say = nezu.say

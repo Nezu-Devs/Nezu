@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nezu"
-version = "0.4.2"
+version = "0.5.1"
 description = "Elegant debuging module"
 authors = ["Chuck Cartwright"]
 license = "MIT"
@@ -9,7 +9,8 @@ packages =[
     # { include = "_os_env.py" },
     # { include = "_parse.py" },
     # { include = "nezu.py" },
-    { include = "nezu" }
+    { include = "nezu" },
+    
 ]
 
 

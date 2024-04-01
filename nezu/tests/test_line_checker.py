@@ -6,10 +6,10 @@ nezu(1)
 
 
 def test_line_checker(capsys):
-    nezu.say()
+    nezu.dbg()
     said = capsys.readouterr().out
     assert said.strip() == '@9'
 
-    nezu.say()
+    nezu.dbg()
     said = capsys.readouterr().out
     assert said.strip() == '@13'
