@@ -1,4 +1,4 @@
-from nezu import say
+from nezu import dbg
 
 
 class Dog:
@@ -6,4 +6,4 @@ class Dog:
         pass
 
 
-say()
+dbg()

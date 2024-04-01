@@ -1,9 +1,9 @@
 # file.py
-from ..nezu import say
+from ..nezu import dbg
 
 
-say('egg', hide=1)
-say('ham', hide=2)
-say('spam', hide=3)
-say('bacon', hide=4)
-say('lobster', hide=5)
+dbg('egg', hide=1)
+dbg('ham', hide=2)
+dbg('spam', hide=3)
+dbg('bacon', hide=4)
+dbg('lobster', hide=5)

@@ -24,3 +24,13 @@ py -m nezu.manual_tests.ztest_hide
 '------------------------------------'
 $env:NEZU_SEEK=5
 py -m nezu.manual_tests.ztest_nez
+'------------------------------------'
+'                say                 '
+'------------------------------------'
+$env:NEZU_SEEK=5
+py -m nezu.manual_tests.ztest_say
+'------------------------------------'
+'             say color              '
+'------------------------------------'
+$env:NEZU_SEEK=5
+py -m nezu.manual_tests.ztest_say_color

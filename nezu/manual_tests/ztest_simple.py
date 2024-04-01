@@ -1,5 +1,5 @@
 # file.py
-from nezu import say
+from nezu import dbg
 
 x = 13
-say('x')
+dbg('x')

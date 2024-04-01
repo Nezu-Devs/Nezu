@@ -1,7 +1,7 @@
 ### TO DO
 
 - [x] Cannot import Nezu form nezu - fix that
-- [ ] Simple printlike function is needed - make say simply try to print data and dbg work like cyrrent say
+- [x] Simple printlike function is needed - make say simply try to print data and dbg work like cyrrent say
 - [ ] Create breakpoints mechanic - simmilar to hide and seek
 - [ ] Make it so multiline objects are properly displayed (remove *args functionality)
 - [x] add class method support?
